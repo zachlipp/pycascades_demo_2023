@@ -1,0 +1,13 @@
+version: "3.9"
+services:
+  hub:
+    build: example-services/hub
+    ports:
+      - "6000:6000"
+    environment:
+      FIZZER_PORT: 6001
+      BUZZER_PORT: 6002
+  fizzer:
+    build: example-services/fizzer
+  buzzer:
+    build: example-services/buzzer
