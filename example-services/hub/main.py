@@ -7,10 +7,11 @@ from opentelemetry import trace
 from opentelemetry.exporter.otlp.proto.grpc.trace_exporter import (
     OTLPSpanExporter,
 )
+from opentelemetry.instrumentation.fastapi import FastAPIInstrumentor
+from opentelemetry.propagate import inject
 from opentelemetry.sdk.resources import Resource
 from opentelemetry.sdk.trace import TracerProvider
 from opentelemetry.sdk.trace.export import BatchSpanProcessor
-from opentelemetry.instrumentation.fastapi import FastAPIInstrumentor
 from pydantic import BaseModel
 
 resource = Resource(attributes={"service.name": "hub"})
@@ -38,8 +39,10 @@ def get_service_address(service: Literal["fizzer", "buzzer"]) -> str:
 def call_remote_service(
     number: float, service: Literal["fizzer", "buzzer"]
 ) -> bool:
+    headers = {}
+    inject(headers)
     url = get_service_address(service)
-    response = requests.post(url, json={"number": number})
+    response = requests.post(url, json={"number": number}, headers=headers)
     response_payload = response.json()
     return response_payload["result"]
 
