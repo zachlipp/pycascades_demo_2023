@@ -32,7 +32,6 @@ app = FastAPI()
 @app.post("/")
 def fizzbuzz(nc: NumberContainer):
     number = nc.number
-    print(number)
     fizz = call_remote_service(number, "fizzer")
     buzz = call_remote_service(number, "buzzer")
     if fizz and buzz:
