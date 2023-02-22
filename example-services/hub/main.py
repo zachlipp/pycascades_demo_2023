@@ -26,7 +26,7 @@ trace.get_tracer_provider().add_span_processor(span_processor)
 
 
 class NumberContainer(BaseModel):
-    number: float
+    number: int
 
 
 def get_service_address(service: Literal["fizzer", "buzzer"]) -> str:
@@ -37,7 +37,7 @@ def get_service_address(service: Literal["fizzer", "buzzer"]) -> str:
 
 
 def call_remote_service(
-    number: float, service: Literal["fizzer", "buzzer"]
+    number: int, service: Literal["fizzer", "buzzer"]
 ) -> bool:
     headers = {}
     inject(headers)
@@ -57,10 +57,10 @@ def fizzbuzz(nc: NumberContainer):
     fizz = call_remote_service(number, "fizzer")
     buzz = call_remote_service(number, "buzzer")
     if fizz and buzz:
-        return f"{number}: Fizzbuzz!"
+        return f"Fizzbuzz!"
     elif fizz:
-        return f"{number}: Fizz!"
+        return f"Fizz!"
     elif buzz:
-        return f"{number}: Buzz!"
+        return f"Buzz!"
     else:
-        return f"{number}: :("
+        return f"{number}"
