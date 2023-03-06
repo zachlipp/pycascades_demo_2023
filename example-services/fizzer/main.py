@@ -35,7 +35,7 @@ def fizz():
     with tracer.start_as_current_span(
         "/", context=FORMAT.extract({"traceparent": traceparent})
     ) as fizzspan:
-        headers = {}
+        headers = {"Content-Type": "application/json"}
         inject(headers)
         user_agent = request.headers.get("user-agent")
         fizzspan.set_attribute("http.user_agent", user_agent)
