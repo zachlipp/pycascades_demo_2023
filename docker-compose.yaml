@@ -11,3 +11,13 @@ services:
     build: example-services/fizzer
   buzzer:
     build: example-services/buzzer
+  jaeger:
+    image: jaegertracing/all-in-one:1.42.0
+    profiles:
+      - tracing
+    ports:
+      # UI
+      - "16686:16686"
+    environment:
+      COLLECTOR_OTLP_ENABLED: true
+      LOG_LEVEL: info
